@@ -11,21 +11,10 @@ const {TripRouter} = require("./routes/triprouter");
 require('dotenv').config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
-app.use("/", UserRouter);
-app.use('/trips', TripRouter);
-app.use('/locations', LocationRouter);
-app.use('/expenses', Expenserouter);
-app.use('/logbook', StatsRouter);
-app.use('/', PdfRouter);
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -39,6 +28,18 @@ app.use((req, res, next) => {
       next();
     }
   });
+  
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.use("/", UserRouter);
+app.use('/trips', TripRouter);
+app.use('/locations', LocationRouter);
+app.use('/expenses', Expenserouter);
+app.use('/logbook', StatsRouter);
+app.use('/', PdfRouter);
 
   
 const PORT = process.env.PORT;
