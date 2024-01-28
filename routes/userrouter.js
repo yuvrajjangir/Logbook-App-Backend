@@ -2,7 +2,7 @@ const express = require('express');
 const UserRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const {UserModel} = require("../model/authmodel");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 
 UserRouter.use(cors());
