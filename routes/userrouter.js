@@ -3,7 +3,9 @@ const UserRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const {UserModel} = require("../model/authmodel");
 const bcrypt = require("bcryptjs");
+const cors = require("cors");
 
+UserRouter.use(cors());
 UserRouter.post("/signup", (req, res) => {
     const {name, email, password} = req.body;
     bcrypt.hash(password, 10, async function(err, hash){

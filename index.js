@@ -1,6 +1,6 @@
 const express = require('express');
 const {connection} = require('./config/db');
-const cors = require("cors");
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const {UserRouter} = require("./routes/userrouter");
 const {Expenserouter} = require("./routes/expenserouter");
@@ -13,6 +13,8 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors());
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -28,7 +30,7 @@ app.use((req, res, next) => {
       next();
     }
   });
-  
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -43,7 +45,7 @@ app.use('/', PdfRouter);
 
   
 const PORT = process.env.PORT;
-app.listen(PORT, async (req, res) => {
+app.listen(PORT, async () => {
     try {
         await connection
         console.log("connected to MongoDB");
