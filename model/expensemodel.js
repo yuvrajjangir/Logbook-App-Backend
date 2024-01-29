@@ -16,6 +16,11 @@ const expenseSchema = new mongoose.Schema({
       return this.isFuel === true;
     },
 },
+user: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'User',
+  required: true,
+},
 });
 
 const Expense = mongoose.model('Expense', expenseSchema);

@@ -1,11 +1,11 @@
 const express = require('express');
 const Expenserouter = express.Router();
 const {Expense} = require('../model/expensemodel');
-
+const { verifyToken } = require('../middleware/verifytoken');
 
 
 // Create a new expense
-Expenserouter.post('/', async (req, res) => {
+Expenserouter.post('/',verifyToken, async (req, res) => {
     try {
       const {
         odometer,
@@ -23,6 +23,7 @@ Expenserouter.post('/', async (req, res) => {
         reason,
         isFuel,
         litresOfFuel,
+        user: req.userId,
       });
   
       await newExpense.save();
@@ -33,9 +34,9 @@ Expenserouter.post('/', async (req, res) => {
   });
   
   // Get all expenses
-  Expenserouter.get('/', async (req, res) => {
+  Expenserouter.get('/',verifyToken, async (req, res) => {
     try {
-      const expenses = await Expense.find();
+      const expenses = await Expense.find({ user: req.userId });
       res.status(200).json(expenses);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -43,9 +44,9 @@ Expenserouter.post('/', async (req, res) => {
   });
   
   // Get a specific expense by ID
-  Expenserouter.get('/:id', async (req, res) => {
+  Expenserouter.get('/:id',verifyToken, async (req, res) => {
     try {
-      const expense = await Expense.findById(req.params.id);
+      const expense = await Expense.findById({ _id: req.params.id, user: req.userId });
       if (!expense) {
         return res.status(404).json({ message: 'Expense not found' });
       }
@@ -56,11 +57,11 @@ Expenserouter.post('/', async (req, res) => {
   });
   
   // Update an expense by ID
-  Expenserouter.put('/:id', async (req, res) => {
+  Expenserouter.put('/:id',verifyToken, async (req, res) => {
     try {
       const { odometer, cost, time, reason, isFuel, litresOfFuel } = req.body;
   
-      const expense = await Expense.findById(req.params.id);
+      const expense = await Expense.findById({ _id: req.params.id, user: req.userId });
       if (!expense) {
         return res.status(404).json({ message: 'Expense not found' });
       }
@@ -80,9 +81,9 @@ Expenserouter.post('/', async (req, res) => {
   });
   
   // Delete an expense by ID
-  Expenserouter.delete('/:id', async (req, res) => {
+  Expenserouter.delete('/:id',verifyToken,  async (req, res) => {
     try {
-      const deletedexpense = await Expense.findByIdAndDelete(req.params.id);
+      const deletedexpense = await Expense.findByIdAndDelete({ _id: req.params.id, user: req.userId });
       if (!deletedexpense) {
         return res.status(404).json({ message: 'Expense not found' });
       }

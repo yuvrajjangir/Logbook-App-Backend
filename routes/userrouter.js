@@ -5,8 +5,8 @@ const {UserModel} = require("../model/authmodel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 
-UserRouter.use(cors());
 UserRouter.post("/signup", (req, res) => {
+    console.log(req.body);
     const {name, email, password} = req.body;
     bcrypt.hash(password, 10, async function(err, hash){
         if(err){
@@ -51,5 +51,7 @@ UserRouter.post("/login", async (req, res) => {
         return res.status(500).send(error.message);
     }
 });
+
+UserRouter.use(cors());
 
 module.exports = {UserRouter};
