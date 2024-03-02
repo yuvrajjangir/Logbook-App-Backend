@@ -5,10 +5,10 @@ const {Expense} = require('../model/expensemodel');
 const {LogbookStats} = require("../model/logbookstatsmodel");
 const {verifyToken} = require("../middleware/verifytoken");
 
-StatsRouter.get('/:year', verifyToken, async (req, res) => {
+StatsRouter.get('/:year', async (req, res) => {
     try {
       const requestedYear = parseInt(req.params.year);
-      const trips = await Trip.find({});
+      const trips = await TripModel.find({});
       const expenses = await Expense.find({});
       
       const tripYears = trips.map(trip => {
