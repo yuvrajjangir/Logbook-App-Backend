@@ -27,11 +27,6 @@ const tripSchema = new mongoose.Schema({
     },
     leavingFrom: String, 
     goingTo: String,
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-  },
   });
   
   const TripModel = mongoose.model('Trip', tripSchema);

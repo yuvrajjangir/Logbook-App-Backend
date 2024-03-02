@@ -21,11 +21,6 @@ const logbookStatsSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-  },
   });
   
   const LogbookStats = mongoose.model('LogbookStats', logbookStatsSchema);
